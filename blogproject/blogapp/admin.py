@@ -12,4 +12,4 @@ class PostAdmin(admin.ModelAdmin):
     date_hierarchy = 'publish'
     prepopulated_fields = {"slug":['title']}
     list_editable = ['status']
-    list_display_links = ['author']
+    # list_display_links = ['author']
