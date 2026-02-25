@@ -1,5 +1,5 @@
-from django.shortcuts import render
-from django.http import HttpResponse, Http404
+from django.shortcuts import render, get_object_or_404
+from django.http import HttpResponse, Http404 
 from . models import Post
 
 # Create your views here.
@@ -12,16 +12,16 @@ def post_list(request):
     context = {
         'posts': posts,
     }
+    return render(request, "blog/list.html", context)
 
-    return render(request, "template1.html", context)
-
-def post_details(request, id):
-    try:
-        post = Post.published.get(id=id)
-    except:
-        raise Http404("No Post Found!")
+def post_detail(request, id):
+    post = get_object_or_404(Post, id=id, status=Post.Status.PUBLISHED)
+    # We can use the upper line instead of try/except
+    # try:
+    #     post = Post.published.get(id=id)
+    # except:
+    #     raise Http404("No Post Found!")
     context = {
         'post': post,
     }
-
-    return render(request, "template2.html", context)
+    return render(request, "blog/detail.html", context)
